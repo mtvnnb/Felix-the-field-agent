@@ -193,20 +193,19 @@ class LookerWorker(Worker):
 
         return task_result
 
-# TODO @minh check this part out - remove the filter for looker repo (i.e. we need ALL the data)
     def fetch(self, **kwargs):
         if self.table_name == 'explore_label': # explore_label use a different API to extract from Looker
             self.get_explore_label()
             self.df = self.get_explore_label()
-        elif self.table_name == 'lookml_fields':
-            if self.project_mapping:
-                looker_repo = LookerRepo(LOOKER_REPO_PATH, self.project_mapping)
-                self.df = looker_repo.run()
-            else:
-                raise ValueError(f"""Extracting {self.table_name} without project mapping file.
-                                 Please make a copy of looker_project.json and fill in the
-                                 mappings of your LookML project(s).
-                                 """)
+        # elif self.table_name == 'lookml_fields':
+        #     if self.project_mapping:
+        #         looker_repo = LookerRepo(LOOKER_REPO_PATH, self.project_mapping)
+        #         self.df = looker_repo.run()
+        #     else:
+        #         raise ValueError(f"""Extracting {self.table_name} without project mapping file.
+        #                          Please make a copy of looker_project.json and fill in the
+        #                          mappings of your LookML project(s).
+        #                          """)
         else:
             query_id = self.create_query(self.table_data,
                     self.start_time,

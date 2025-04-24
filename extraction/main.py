@@ -18,7 +18,6 @@ hardcoded_list = [
                   'explore_label',
                   'history',
                   'query',
-                  'lookml_fields',
                   'query_metrics'
                  ]
 
@@ -43,8 +42,8 @@ def extract(table_name:str):
     project_mapping_path = args.mapping_file if args.mapping_file else LOOKER_PROJECT_MAPPING_PATH
     try:
         looker_worker = LookerWorker(table_name = table)
-        if table == 'lookml_fields':
-            looker_worker.set_project_mapping(project_mapping_path)
+        # if table == 'lookml_fields':
+        #     looker_worker.set_project_mapping(project_mapping_path)
         looker_worker.fetch()
         looker_worker.dump()
         bq_worker = BigQueryWorker(table_name = table)
